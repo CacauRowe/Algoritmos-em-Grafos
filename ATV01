@@ -1,0 +1,26 @@
+import numpy as np # Importação da biblioteca numpy
+
+def leitura(nome_arquivo): # lê o conteudo do arquivo informado via input
+    try:
+        with open(nome_arquivo, 'r') as file:
+            content = file.read()
+        return content
+    except FileNotFoundError:
+        print(f"Erro: Arquivo '{nome_arquivo}' não encontrado.")
+
+def analise(content): # recebe o conteudo da leitura cria uma matrix numpy e então retorna essa matrix
+    lines = content.splitlines()
+    matrix = [list(map(int, line.split())) for line in lines]
+    return np.array(matrix)
+
+def main(): # função principal, solicita ao usuario que informe o nome do arquivo, faz a leitura do arquivo 
+    nome_arquivo = input("Digite o nome do arquivo: ") # chamando a função leitura, transforma em matriz através da função analise
+    conteudo_instancia = leitura(nome_arquivo)  # através da função analise depois exibe as informações ma matrix         
+    matriz_instancia = analise(conteudo_instancia) #(nome, n de linhas e n de colunas) e por fim salva as informações no arquivo resultado.txt    
+    num_linhas, num_colunas = matriz_instancia.shape
+    print(f"Arquivo: {nome_arquivo},linhas =  {num_linhas}, colunas = {num_colunas}.")
+    with open("resultado.txt", 'w') as arquivo_resultado:
+        arquivo_resultado.write(f"{nome_arquivo} {num_linhas} {num_colunas}")
+
+if __name__ == "__main__":
+    main() 
